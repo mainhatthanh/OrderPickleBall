@@ -1,0 +1,68 @@
+{
+  "users": [
+    {
+      "id": "u_admin",
+      "name": "Admin",
+      "email": "admin@pickleplay.dev",
+      "password": "$2b$08$.Sor/xQiCcoA2qP3UDkqMOJsk9lbm/hpwFHeTOM2qiguSav1QNF/2",
+      "role": "admin",
+      "locked": false
+    },
+    {
+      "id": "u_manager",
+      "name": "Manager A",
+      "email": "manager@pickleplay.dev",
+      "password": "$2b$08$dj9QF6N4WUyR4TvQcL.XcOm3eTk8V/etqnMIO21WPvWXPbp0m9IIy",
+      "role": "manager",
+      "locked": false
+    },
+    {
+      "id": "u_user",
+      "name": "User A",
+      "email": "user@pickleplay.dev",
+      "password": "$2b$08$KrTkU.J0ZSE2G1dS/K.T3eGS/3Ev12llPoxWacUhPXBtHSLsPV0/K",
+      "role": "user",
+      "locked": false
+    }
+  ],
+  "paymentProfiles": [
+    {
+      "id": "pp_manager",
+      "ownerId": "u_manager",
+      "bank": "Vietcombank",
+      "accountNo": "0123456789",
+      "accountName": "MANAGER A"
+    }
+  ],
+  "courts": [
+    {
+      "id": "c1",
+      "name": "Pickle Park 1",
+      "address": "123 ABC, Hà Nội",
+      "pricePerHour": 120000,
+      "status": "active",
+      "images": [],
+      "ownerId": "u_manager"
+    },
+    {
+      "id": "c2",
+      "name": "Pickle Park 2",
+      "address": "456 XYZ, Hà Nội",
+      "pricePerHour": 150000,
+      "status": "active",
+      "images": [],
+      "ownerId": "u_manager"
+    },
+    {
+      "id": "c3",
+      "name": "LXT",
+      "address": "Lisbon",
+      "pricePerHour": 100000,
+      "status": "pending",
+      "images": [],
+      "ownerId": "u_manager"
+    }
+  ],
+  "bookings": [],
+  "transactions": []
+}
