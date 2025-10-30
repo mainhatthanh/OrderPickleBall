@@ -1,0 +1,74 @@
+:root{
+  --primary:#4CAF50;
+  --primary-700:#2e7d32;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow-sm:0 6px 18px rgba(0,0,0,.10);
+}
+
+/* Container */
+.admin-stats{
+  position: relative;           /* nằm trên overlay nền mờ nếu có */
+  z-index: 1;
+  max-width: 1100px;
+  margin: 24px auto 60px;
+  padding: 0 24px;
+  color: var(--text);
+}
+.page-title{
+  font-size: 28px;
+  font-weight: 800;
+  margin: 8px 0 16px;
+}
+
+/* KPI */
+.kpi-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap:16px;
+  margin-bottom:20px;
+}
+.kpi-card{
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  padding:16px;
+}
+.kpi-label{ color:var(--muted); font-weight:600; font-size:14px; }
+.kpi-value{ font-size:26px; font-weight:800; margin-top:6px; }
+
+/* Theo tháng */
+.section-title{ margin: 4px 0 10px; }
+
+.month-list{
+  list-style:none;
+  padding:0; margin:0;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.month-item{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+}
+.month-item:last-child{ border-bottom:none; }
+.month{ color: var(--muted); }
+.money{ font-weight:800; color: var(--primary-700); }
+
+/* Responsive */
+@media (max-width: 900px){
+  .kpi-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px){
+  .admin-stats{ padding: 0 16px; }
+  .kpi-grid{ grid-template-columns: 1fr; }
+}

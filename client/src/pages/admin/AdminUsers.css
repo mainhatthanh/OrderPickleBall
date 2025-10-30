@@ -1,0 +1,104 @@
+:root{
+  --primary:#4CAF50;
+  --primary-700:#2e7d32;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow-sm:0 6px 18px rgba(0,0,0,.10);
+}
+
+/* ===== Page container ===== */
+.users-page{
+  position: relative; z-index: 1;              /* nằm trên overlay nền mờ */
+  max-width: 1100px;
+  margin: 24px auto 60px;
+  padding: 0 24px;
+  color: var(--text);
+}
+.page-title{
+  font-size: 26px; font-weight: 800; margin: 8px 0 14px;
+}
+
+/* ===== Glass card ===== */
+.users-card{
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  padding: 14px;
+  overflow-x: auto;
+}
+
+/* ===== Table ===== */
+.users-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.users-table thead{ background: rgba(245,245,245,.9); }
+.users-table th, .users-table td{
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.users-table tbody tr:hover{ background: rgba(0,0,0,.03); }
+
+/* ===== Badges (role/locked) ===== */
+.badge{
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+}
+.role-admin   { background:#e3f2fd; color:#0b63a0; }
+.role-manager { background:#fff3cd; color:#664d03; }
+.role-user    { background:#e9ecef; color:#495057; }
+
+.lock-true  { background:#f8d7da; color:#842029; }
+.lock-false { background:#d1e7dd; color:#0f5132; }
+
+/* ===== Buttons ===== */
+.btn{
+  appearance: none;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, transform .06s ease, opacity .2s ease;
+}
+.btn:hover{ background:#f6f7f9; }
+.btn:active{ transform: translateY(1px); }
+.btn:disabled{ opacity:.55; cursor:not-allowed; box-shadow:none; }
+
+.btn-success{
+  border-color: rgba(76,175,80,.35);
+  background: #e8f5e9;
+  color: var(--primary-700);
+}
+.btn-success:hover{ background:#dbefdf; }
+
+.btn-danger{
+  border-color: rgba(220,38,38,.3);
+  background: #fde2e2;
+  color: #a12020;
+}
+.btn-danger:hover{ background:#fbd6d6; }
+
+/* ===== Responsive ===== */
+@media (max-width: 640px){
+  .users-page{ padding: 0 16px; }
+  .users-table th, .users-table td{ padding: 8px 10px; font-size: 13px; }
+}

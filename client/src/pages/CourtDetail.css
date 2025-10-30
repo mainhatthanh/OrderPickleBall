@@ -1,0 +1,181 @@
+/* ========= THEME TOKENS ========= */
+:root{
+  --primary:#4CAF50;
+  --primary-700:#2e7d32;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --ring:rgba(76,175,80,.25);
+  --shadow:0 12px 28px rgba(0,0,0,.12);
+  --shadow-sm:0 4px 12px rgba(0,0,0,.08);
+  --radius:16px;          /* bo góc card */
+  --radius-sm:12px;       /* bo góc input */
+  --blur:8px;
+}
+
+/* ========= FULL SCREEN BACKGROUND ========= */
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text);
+  background: url("https://cdn.shopvnb.com/uploads/images/bai_viet/pickleball-wallpaper-10-1750465001.webp")
+              center/cover no-repeat fixed;
+  overflow-x: hidden;
+}
+
+/* ===== Overlay mờ: để DƯỚI nội dung, không chặn click ===== */
+body::before{
+  content:"";
+  position: fixed; inset: 0;
+  background: rgba(255,255,255,.68);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  z-index: 0;               /* dưới mọi nội dung */
+  pointer-events: none;     /* không bắt sự kiện */
+}
+
+/* ===== Đặt header cao hơn overlay để KHÔNG bị mờ ===== */
+/* Dùng class thực tế header của bạn (ví dụ .navbar, .header) */
+header, .navbar, .header{
+  position: relative;
+  z-index: 2;               /* cao hơn body::before */
+  backdrop-filter: none;    /* đảm bảo không mờ */
+}
+
+/* ===== Toàn bộ phần page content nằm trên overlay ===== */
+#root, main, .page, .page-container, .court-detail{
+  position: relative;
+  z-index: 1;
+}
+
+/* ========= PAGE CONTAINER ========= */
+.court-detail{
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========= HEADERS ========= */
+.court-detail h2{
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+.court-detail .meta{ color: var(--muted); margin-bottom: 2px; }
+.court-detail .price{ font-weight: 700; margin: 2px 0 14px; }
+.court-detail hr{
+  border: 0; border-top: 1px solid var(--border);
+  margin: 16px 0 18px;
+}
+.court-detail h3{ margin: 0 0 12px; font-size: 20px; }
+
+/* ========= BOOKING FORM (GLASS CARD) ========= */
+.booking-form{
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(255,255,255,.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+
+  /* chặn ring/box-shadow của input tràn ra ngoài */
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.booking-form label{
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Inputs không tràn, tính theo border-box */
+.booking-form input[type="date"],
+.booking-form input[type="number"],
+.booking-form select{
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+  -moz-appearance: textfield;
+}
+/* Ẩn spinner Chrome */
+.booking-form input[type="number"]::-webkit-outer-spin-button,
+.booking-form input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none; margin: 0;
+}
+/* Ring focus gọn */
+.booking-form input:focus,
+.booking-form select:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* ========= SUMMARY ========= */
+.summary{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+.summary strong{ color: var(--primary-700); }
+
+/* ========= BUTTON ========= */
+.booking-form button{
+  height: 46px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(76,175,80,.28);
+  transition: transform .06s ease, box-shadow .18s ease, background .18s ease;
+}
+.booking-form button:hover{ background: var(--primary-700); }
+.booking-form button:active{ transform: translateY(1px); }
+.booking-form button:disabled{
+  opacity: .55; cursor: not-allowed; box-shadow: none;
+}
+
+/* ========= ERROR ========= */
+.form-error{
+  margin-top: 2px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: #fff3f3;
+  border: 1px solid #ffc6c6;
+  color: #b4232a;
+  font-size: 14px;
+}
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 640px){
+  .court-detail{ padding: 24px 16px 40px; }
+  .court-detail h2{ font-size: 24px; }
+  .booking-form{ padding: 16px; border-radius: 14px; }
+  .summary{ flex-direction: column; align-items: flex-start; }
+}

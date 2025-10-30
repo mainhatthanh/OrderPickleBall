@@ -1,0 +1,93 @@
+:root{
+  --primary:#4CAF50;
+  --primary-700:#2e7d32;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow-sm:0 6px 18px rgba(0,0,0,.10);
+}
+
+.login-page{
+  min-height: calc(100vh - 64px);      /* chừa header; chỉnh số nếu header cao/thấp khác */
+  display:flex; align-items:center; justify-content:center;
+  padding: 40px 16px;
+  position:relative; z-index:1;        /* nằm trên overlay nền nếu có */
+}
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  background: rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 28px 24px;
+}
+
+.login-title{
+  margin:0 0 14px;
+  font-size:24px;
+  font-weight:800;
+  text-align:center;
+}
+
+.input-group{ display:grid; gap:6px; margin-bottom:12px; }
+.input-group label{ font-size:14px; font-weight:600; }
+.input-group input{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background:#fff;
+  font-size:14px;
+  outline:none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.input-group input:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(76,175,80,.25);
+}
+
+/* ô mật khẩu có nút hiện/ẩn */
+.pwd-wrap{ position:relative; }
+.toggle-pwd{
+  position:absolute; right:8px; top:50%; transform: translateY(-50%);
+  border:none; background:transparent; color:var(--primary-700);
+  font-weight:700; cursor:pointer; padding:4px 6px; border-radius:8px;
+}
+.toggle-pwd:hover{ background: rgba(76,175,80,.08); }
+
+/* lỗi */
+.form-error{
+  margin:6px 0 8px;
+  padding:10px 12px;
+  border-radius: var(--radius-sm);
+  background:#fff3f3; border:1px solid #ffc6c6; color:#b4232a;
+  font-size:14px;
+}
+
+/* nút submit */
+.btn-primary{
+  width:100%; height:44px;
+  border:none; border-radius: var(--radius);
+  background: var(--primary); color:#fff;
+  font-weight:700; font-size:15px; cursor:pointer;
+  box-shadow: 0 8px 18px rgba(76,175,80,.28);
+  transition: background .2s ease, transform .06s ease, opacity .2s ease;
+}
+.btn-primary:hover{ background: var(--primary-700); }
+.btn-primary:active{ transform: translateY(1px); }
+.btn-primary:disabled{ opacity:.55; cursor:not-allowed; box-shadow:none; }
+
+.demo-note{
+  margin-top:12px; text-align:center; color:var(--muted); font-size:14px;
+}
+.demo-note strong{ color: var(--text); }
+
+@media (max-width: 480px){
+  .login-card{ padding: 22px 16px; }
+}

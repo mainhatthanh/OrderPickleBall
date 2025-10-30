@@ -1,0 +1,119 @@
+:root {
+  --primary: #4CAF50;
+  --primary-dark: #2e7d32;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 14px;
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset để tránh lỗi width */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ===== PAGE CONTAINER ===== */
+.manager-orders {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  color: var(--text);
+}
+
+.manager-orders h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+/* ===== TABLE CONTAINER (glass effect) ===== */
+.manager-orders table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+/* ===== TABLE HEAD ===== */
+.manager-orders thead {
+  background: var(--primary);
+  color: #fff;
+  text-align: left;
+}
+
+.manager-orders th {
+  padding: 12px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ===== TABLE BODY ===== */
+.manager-orders td {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.manager-orders tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Alternating row color */
+.manager-orders tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.manager-orders tbody tr:nth-child(even) {
+  background: rgba(250, 250, 250, 0.85);
+}
+
+/* Hover highlight */
+.manager-orders tbody tr:hover {
+  background: rgba(76, 175, 80, 0.08);
+  transition: background 0.2s ease;
+}
+
+/* ===== STATUS COLORING ===== */
+.manager-orders td:last-child {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.manager-orders td:last-child:contains("pending") {
+  color: #c77700;
+}
+.manager-orders td:last-child:contains("confirmed") {
+  color: var(--primary-dark);
+}
+.manager-orders td:last-child:contains("cancelled"),
+.manager-orders td:last-child:contains("rejected") {
+  color: #b91c1c;
+}
+
+/* ===== EMPTY ROW ===== */
+.manager-orders td[colspan="6"] {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  padding: 16px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .manager-orders table {
+    font-size: 13px;
+  }
+  .manager-orders th, .manager-orders td {
+    padding: 8px 10px;
+  }
+}

@@ -1,0 +1,81 @@
+:root{
+  --primary:#4CAF50;
+  --primary-700:#2e7d32;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow-sm:0 6px 18px rgba(0,0,0,.10);
+}
+
+/* Trang bọc để căn giữa, nằm trên overlay nền mờ */
+.payment-page{
+  position: relative; z-index: 1;
+  min-height: calc(100vh - 64px);
+  display:flex; align-items:flex-start; justify-content:center;
+  padding: 40px 16px 60px;
+  color: var(--text);
+}
+
+/* Thẻ card glass */
+.payment-card{
+  width: 100%;
+  max-width: 460px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 18px;
+  display:grid; gap: 12px;
+}
+
+.payment-card .title{
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Field + label */
+.field{ display:grid; gap:6px; }
+.field > span{ font-size:14px; font-weight:600; color: var(--muted); }
+
+/* Input */
+.payment-card input{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.payment-card input:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(76,175,80,.25);
+}
+
+/* Nút lưu */
+.btn-primary{
+  height: 44px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(76,175,80,.28);
+  transition: background .2s ease, transform .06s ease;
+}
+.btn-primary:hover{ background: var(--primary-700); }
+.btn-primary:active{ transform: translateY(1px); }
+
+/* Mobile */
+@media (max-width: 480px){
+  .payment-card{ padding: 18px 14px; }
+}

@@ -1,0 +1,118 @@
+/* ====== Theme tokens ====== */
+:root{
+  --bg-overlay: rgba(255,255,255,.62);
+  --blur: 8px;
+  --text: #222;
+  --muted: #6b7280;
+  --primary: #4CAF50;           /* xanh thể thao */
+  --primary-700: #2e7d32;
+  --card-start: #ffffff;
+  --card-end: #f5f9ff;
+  --ring: rgba(76,175,80,.25);
+  --shadow: 0 10px 24px rgba(0,0,0,.12);
+  --shadow-sm: 0 2px 6px rgba(0,0,0,.08);
+}
+
+/* ====== Page background + overlay ====== */
+.home-container{
+  position: relative;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text);
+  background: url("https://cdn.shopvnb.com/uploads/images/bai_viet/pickleball-wallpaper-10-1750465001.webp")
+              center/cover no-repeat fixed;
+  overflow: hidden;
+}
+.home-container::before{
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  z-index: 0;
+}
+/* ensure content is above overlay */
+.home-container > *{ position: relative; z-index: 1; }
+
+/* ====== Title ====== */
+.home-title{
+  font-size: 28px;
+  font-weight: 700;
+  margin: 4px 0 20px;
+  color: #1a1a1a;
+  letter-spacing: .2px;
+}
+
+/* ====== Grid ====== */
+.court-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+/* ====== Card ====== */
+.court-card{
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 16px;
+  padding: 16px 16px 14px;
+  background: linear-gradient(135deg, var(--card-start) 0%, var(--card-end) 100%);
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.court-card:hover{
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: var(--ring);
+}
+
+/* Tiêu đề sân */
+.court-card h4{
+  font-size: 18px;
+  font-weight: 700;
+  margin: 2px 0 8px;
+  color: var(--primary);
+}
+
+/* Dòng thông tin */
+.court-card div{
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Badge giá (tùy dùng span.price) */
+.court-card .price{
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 700;
+  color: var(--primary-700);
+  background: rgba(76,175,80,.08);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+/* ====== Button ====== */
+.court-card a{
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #fff;
+  background: var(--primary);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(76,175,80,.25);
+  transition: transform .06s ease, box-shadow .18s ease, background .18s ease;
+}
+.court-card a:hover{ background: var(--primary-700); box-shadow: 0 10px 22px rgba(76,175,80,.35); }
+.court-card a:active{ transform: translateY(1px); }
+
+/* ====== Responsive tweaks ====== */
+@media (max-width: 768px){
+  .home-container{ padding: 16px; }
+  .home-title{ font-size: 22px; margin-bottom: 14px; }
+  .court-card{ border-radius: 14px; }
+  .court-card a{ width: 100%; text-align: center; }
+}
