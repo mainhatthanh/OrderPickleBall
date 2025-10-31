@@ -10,11 +10,44 @@ function isValidDateYYYYMMDD(s) {
     return !Number.isNaN(d.getTime()) && s === d.toISOString().slice(0, 10);
 }
 
+// // Lấy danh sách booking của chính user
+// export function listMy(req, res) {
+//     const courts = db.data.courts || [];
+//     const courtById = new Map(courts.map(c => [c.id, c]));
+
+//     const items = db.data.bookings
+//         .filter(b => b.userId === req.user.id)
+//         .map(b => {
+//             const c = courtById.get(b.courtId) || {};
+//             return {
+//                 ...b,
+//                 courtName: b.courtName || c.name || b.courtId,   // ưu tiên field có sẵn
+//                 // (tuỳ chọn) courtAddress: b.address || c.address
+//             };
+//         });
+
+//     res.json(items);
+// }
+
 // Lấy danh sách booking của chính user
 export function listMy(req, res) {
-    const items = db.data.bookings.filter(b => b.userId === req.user.id);
+    const courts = db.data.courts || [];
+    const courtById = new Map(courts.map(c => [c.id, c]));
+
+    const items = db.data.bookings
+        .filter(b => b.userId === req.user.id)
+        .map(b => {
+            const c = courtById.get(b.courtId) || {};
+            return {
+                ...b,
+                courtName: b.courtName || c.name || b.courtId,
+                courtAddress: b.address || c.address || '(Không rõ địa chỉ)' // ✅ thêm dòng này
+            };
+        });
+
     res.json(items);
 }
+
 
 // Tạo booking: pending_payment + trả về info để sinh QR
 export function create(req, res) {

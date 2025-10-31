@@ -67,7 +67,7 @@ export default function Login() {
         </button>
 
         <p className="demo-note">
-          <strong>Tài khoản mẫu:</strong> admin / manager / user @pickleplay.dev<br />
+          <strong>Tài khoản mẫu:</strong> admin/manager/user@pickleplay.dev<br />
           <span>(mật khẩu: 123456)</span>
         </p>
 
