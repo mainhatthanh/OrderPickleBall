@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { login } from '../services/auth';
-import './Login.css'; 
+import { Link } from 'react-router-dom';   // ✅ thêm import này
+import './Login.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -68,6 +69,11 @@ export default function Login() {
         <p className="demo-note">
           <strong>Tài khoản mẫu:</strong> admin / manager / user @pickleplay.dev<br />
           <span>(mật khẩu: 123456)</span>
+        </p>
+
+        {/* ✅ Thêm link đăng ký ở đây */}
+        <p style={{ textAlign: 'center', marginTop: 12 }}>
+          Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link>
         </p>
       </form>
     </div>

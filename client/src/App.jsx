@@ -12,6 +12,7 @@ import ManagerOrders from './pages/manager/ManagerOrders';
 import ManagerPayment from './pages/manager/ManagerPayment';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminUsers from './pages/admin/AdminUsers';
+import Register from './pages/Register.jsx';
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/court/:id" element={<CourtDetail />} />
         <Route path="/checkout/:bookingId" element={<Checkout />} />
         <Route path="/my-bookings" element={<ProtectedRoute roles={['user']}><MyBookings /></ProtectedRoute>} />
