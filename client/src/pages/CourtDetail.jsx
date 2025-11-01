@@ -9,8 +9,8 @@ export default function CourtDetail() {
 
   const [court, setCourt] = useState(null);
   const [date, setDate] = useState('');
-  const [startHour, setStart] = useState(18);
-  const [endHour, setEnd] = useState(20);
+  const [startHour, setStart] = useState('');
+  const [endHour, setEnd] = useState('');
   const [err, setErr] = useState('');
   const [loading, setLoading] = useState(false);
 
