@@ -1,12 +1,16 @@
 // server.js
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import router from './src/routes/index.js';
 import { initDb } from './src/db.js';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// serve uploaded files
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // init DB
 await initDb();

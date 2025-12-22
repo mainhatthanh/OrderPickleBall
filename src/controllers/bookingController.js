@@ -6,28 +6,8 @@ function isValidDateYYYYMMDD(s) {
     if (typeof s !== 'string') return false;
     if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
     const d = new Date(s + 'T00:00:00Z');
-    // so khớp lại để chắc chắn không lệch (ví dụ 2025-02-30)
     return !Number.isNaN(d.getTime()) && s === d.toISOString().slice(0, 10);
 }
-
-// // Lấy danh sách booking của chính user
-// export function listMy(req, res) {
-//     const courts = db.data.courts || [];
-//     const courtById = new Map(courts.map(c => [c.id, c]));
-
-//     const items = db.data.bookings
-//         .filter(b => b.userId === req.user.id)
-//         .map(b => {
-//             const c = courtById.get(b.courtId) || {};
-//             return {
-//                 ...b,
-//                 courtName: b.courtName || c.name || b.courtId,   // ưu tiên field có sẵn
-//                 // (tuỳ chọn) courtAddress: b.address || c.address
-//             };
-//         });
-
-//     res.json(items);
-// }
 
 // Lấy danh sách booking của chính user
 export function listMy(req, res) {
@@ -41,13 +21,12 @@ export function listMy(req, res) {
             return {
                 ...b,
                 courtName: b.courtName || c.name || b.courtId,
-                courtAddress: b.address || c.address || '(Không rõ địa chỉ)' // ✅ thêm dòng này
+                courtAddress: b.address || c.address || '(Không rõ địa chỉ)',
             };
         });
 
     res.json(items);
 }
-
 
 // Tạo booking: pending_payment + trả về info để sinh QR
 export function create(req, res) {
@@ -80,17 +59,21 @@ export function create(req, res) {
     if (!court) return res.status(400).json({ message: 'Sân không khả dụng' });
 
     // 3) Check trùng giờ cùng ngày
+    // LƯU Ý: khi có thêm trạng thái 'pending' (chờ duyệt minh chứng),
+    // cũng phải chặn trùng lịch.
     const overlap = db.data.bookings.find(
-        b => b.courtId === courtId &&
+        b =>
+            b.courtId === courtId &&
             b.date === date &&
             !(endHour <= b.startHour || startHour >= b.endHour) &&
-            ['pending_payment', 'confirmed'].includes(b.status)
+            ['pending_payment', 'pending', 'confirmed'].includes(b.status)
     );
     if (overlap) return res.status(409).json({ message: 'Khung giờ đã được đặt' });
 
     // 4) Tính tiền & lưu
-    const hours = endHour - startHour; // > 0 chắc chắn
+    const hours = endHour - startHour;
     const amount = hours * Number(court.pricePerHour || 0);
+
     const booking = {
         id: nanoid(8),
         userId: req.user.id,
@@ -99,9 +82,12 @@ export function create(req, res) {
         startHour,
         endHour,
         amount,
-        status: 'pending_payment',
-        createdAt: new Date().toISOString()
+        status: 'pending_payment', // tạo xong -> qua trang checkout upload minh chứng
+        paymentProofUrl: null,      // sẽ set khi user upload
+        rejectReason: null,         // manager reject thì set
+        createdAt: new Date().toISOString(),
     };
+
     db.data.bookings.push(booking);
 
     // Thông tin tài khoản chủ sân để client sinh QR
@@ -111,7 +97,53 @@ export function create(req, res) {
     res.json({ booking, payment: ownerProfile });
 }
 
-// Demo: xác nhận đã thanh toán -> chuyển confirmed
+/**
+ * NEW: User upload minh chứng thanh toán -> booking chuyển sang 'pending' (chờ chủ sân duyệt)
+ * Route: POST /bookings/submit-proof  (multipart/form-data, field file = "paymentProof")
+ * Body: { bookingId }
+ */
+export function submitProof(req, res) {
+    const { bookingId } = req.body || {};
+    if (!bookingId) return res.status(400).json({ message: 'Thiếu bookingId' });
+
+    const b = db.data.bookings.find(x => x.id === bookingId);
+    if (!b) return res.status(404).json({ message: 'Không tìm thấy booking' });
+
+    // chỉ chủ booking mới được gửi minh chứng
+    if (b.userId !== req.user.id) {
+        return res.status(403).json({ message: 'Bạn không có quyền thao tác booking này' });
+    }
+
+    // chỉ cho submit khi đang pending_payment
+    if (b.status !== 'pending_payment') {
+        return res.status(400).json({ message: 'Booking không ở trạng thái chờ thanh toán' });
+    }
+
+    // file bắt buộc
+    if (!req.file) {
+        return res.status(400).json({ message: 'Chưa upload minh chứng thanh toán' });
+    }
+
+    // lưu url để manager xem
+    b.paymentProofUrl = `/uploads/payment_proofs/${req.file.filename}`;
+    b.status = 'pending'; // đúng usecase: tạo booking trạng thái Pending sau khi có minh chứng
+    b.proofSubmittedAt = new Date().toISOString();
+
+    // ghi transaction demo để có lịch sử (tuỳ chọn)
+    db.data.transactions.push({
+        id: nanoid(8),
+        bookingId,
+        amount: b.amount,
+        status: 'proof_submitted',
+        createdAt: new Date().toISOString(),
+    });
+
+    db.write();
+    res.json({ message: 'Đã gửi minh chứng. Booking đang chờ chủ sân duyệt (Pending).', booking: b });
+}
+
+// Demo cũ: xác nhận đã thanh toán -> chuyển confirmed (giữ lại để không gãy demo)
+// Nếu bạn muốn “khóa” đường này, có thể bắt buộc phải có paymentProofUrl.
 export function confirmPaid(req, res) {
     const { bookingId } = req.body || {};
     const b = db.data.bookings.find(x => x.id === bookingId);
@@ -123,7 +155,7 @@ export function confirmPaid(req, res) {
         bookingId,
         amount: b.amount,
         status: 'paid',
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
     });
 
     db.write();

@@ -1,33 +1,34 @@
-:root{
-  --primary:#4CAF50;
-  --primary-700:#2e7d32;
-  --text:#1f2937;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --shadow-sm:0 4px 12px rgba(0,0,0,.08);
-  --radius:16px;
-  --radius-sm:10px;
+:root {
+  --primary: #4CAF50;
+  --primary-700: #2e7d32;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, .08);
+  --radius: 16px;
+  --radius-sm: 10px;
 }
 
 /* Trang & tiêu đề */
-.booking-history{
+.booking-history {
   position: relative;
-  z-index: 1;               /* trên overlay nền */
+  z-index: 1;
   max-width: 960px;
   margin: 40px auto;
   padding: 0 24px;
   color: var(--text);
 }
-.booking-history h2{
+
+.booking-history h2 {
   font-size: 24px;
   font-weight: 800;
   margin: 0 0 14px;
 }
 
 /* Card “glass” bao bảng */
-.history-card{
-  background: rgba(255,255,255,.78);
-  border: 1px solid rgba(255,255,255,.55);
+.history-card {
+  background: rgba(255, 255, 255, .78);
+  border: 1px solid rgba(255, 255, 255, .55);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: var(--radius);
@@ -37,53 +38,86 @@
 }
 
 /* Bảng */
-.history-table{
+.history-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 15px;
 }
-.history-table thead{
-  background: rgba(245,245,245,.9);
+
+.history-table thead {
+  background: rgba(245, 245, 245, .9);
 }
-.history-table th, .history-table td{
+
+.history-table th,
+.history-table td {
   text-align: left;
   padding: 10px 12px;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
-.history-table th{
+
+.history-table th {
   font-weight: 700;
   color: var(--primary-700);
 }
-.history-table tbody tr:hover{
-  background: rgba(0,0,0,.03);
+
+.history-table tbody tr:hover {
+  background: rgba(0, 0, 0, .03);
 }
 
 /* Cột tiền */
-.history-table td.amount{
+.history-table td.amount {
   font-weight: 700;
 }
 
 /* Trạng thái (badge) */
-.status{
+.status {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: var(--radius-sm);
   font-weight: 700;
   font-size: 13px;
 }
-.status.confirmed{
-  color:#0f5132; background:#d1e7dd;
+
+/* confirmed xanh */
+.status.confirmed {
+  color: #0f5132;
+  background: #d1e7dd;
 }
-.status.pending_payment{
-  color:#664d03; background:#fff3cd;
+
+/* pending vàng (chờ duyệt) */
+.status.pending {
+  color: #664d03;
+  background: #fff3cd;
 }
-.status.cancelled{
-  color:#842029; background:#f8d7da;
+
+/* pending_payment: giữ vàng (nhưng UI đã normalize sang pending) */
+.status.pending_payment {
+  color: #664d03;
+  background: #fff3cd;
+}
+
+/* rejected đỏ */
+.status.rejected {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+/* cancelled (nếu có dùng) */
+.status.cancelled {
+  color: #842029;
+  background: #f8d7da;
 }
 
 /* Responsive */
-@media (max-width: 640px){
-  .booking-history{ padding: 0 16px; }
-  .history-table th, .history-table td{ padding: 8px 10px; font-size: 13px; }
+@media (max-width: 640px) {
+  .booking-history {
+    padding: 0 16px;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
 }

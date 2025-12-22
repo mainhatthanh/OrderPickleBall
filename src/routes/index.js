@@ -13,6 +13,7 @@ router.use('/courts', courts);
 router.use('/bookings', bookings);
 router.use('/manager', manager);
 router.use('/admin', admin);             // <---
-router.use('/stats', stats);             // <---
+router.use('/stats', stats);
+
 
 export default router;

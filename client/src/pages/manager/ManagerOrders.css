@@ -9,7 +9,9 @@
 }
 
 /* Reset để tránh lỗi width */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -92,9 +94,11 @@
 .manager-orders td:last-child:contains("pending") {
   color: #c77700;
 }
+
 .manager-orders td:last-child:contains("confirmed") {
   color: var(--primary-dark);
 }
+
 .manager-orders td:last-child:contains("cancelled"),
 .manager-orders td:last-child:contains("rejected") {
   color: #b91c1c;
@@ -113,7 +117,63 @@
   .manager-orders table {
     font-size: 13px;
   }
-  .manager-orders th, .manager-orders td {
+
+  .manager-orders th,
+  .manager-orders td {
     padding: 8px 10px;
   }
+}
+
+/* ===== Button System (Global) ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .15s ease;
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Link - Xem */
+.btn-link {
+  color: #2563eb;
+  background: transparent;
+  padding: 0;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+/* Success - Duyệt */
+.btn-success {
+  background: #4CAF50;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background: #43a047;
+}
+
+/* Danger - Từ chối */
+.btn-danger {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
 }
