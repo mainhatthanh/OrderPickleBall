@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
-import './CourtDetail.css'; // ← thêm dòng này
+import './CourtDetail.css';
 
 export default function CourtDetail() {
   const { id } = useParams();
@@ -14,7 +14,6 @@ export default function CourtDetail() {
   const [err, setErr] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // lấy thông tin sân
   useEffect(() => {
     let mounted = true;
     setErr('');
@@ -24,20 +23,18 @@ export default function CourtDetail() {
     return () => (mounted = false);
   }, [id]);
 
-  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const today = new Date().toISOString().slice(0, 10);
 
-  // thời lượng và tổng tiền
   const pricePerHour = court?.pricePerHour ?? 0;
   const duration = useMemo(() => {
     const s = Number(startHour);
     const e = Number(endHour);
     if (Number.isNaN(s) || Number.isNaN(e) || e <= s) return 0;
-    return e - s; // đang dùng đơn vị giờ nguyên
+    return e - s;
   }, [startHour, endHour]);
 
   const total = duration * pricePerHour;
 
-  // điều kiện vô hiệu nút
   const invalid =
     !date ||
     Number.isNaN(Number(startHour)) ||
@@ -51,7 +48,8 @@ export default function CourtDetail() {
     setLoading(true);
     setErr('');
     try {
-      const { booking, payment } = await api('/bookings', {
+      // giờ chỉ prepare checkout (không tạo booking)
+      const { draft, payment } = await api('/bookings', {
         method: 'POST',
         body: JSON.stringify({
           courtId: id,
@@ -60,11 +58,16 @@ export default function CourtDetail() {
           endHour: Number(endHour),
         }),
       });
+
+      // tạo draftId để đi checkout (không liên quan bookingId DB)
+      const draftId = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+
       sessionStorage.setItem(
-        'payment-info',
-        JSON.stringify({ booking, payment })
+        `payment-info:${draftId}`,
+        JSON.stringify({ draftId, draft, payment })
       );
-      nav(`/checkout/${booking.id}`);
+
+      nav(`/checkout/${draftId}`);
     } catch (e) {
       setErr(e?.message || 'Đặt sân thất bại');
     } finally {
@@ -126,15 +129,9 @@ export default function CourtDetail() {
           />
         </label>
 
-        {/* Tóm tắt đặt chỗ */}
         <div className="summary">
-          <div>
-            Thời lượng: <strong>{duration}</strong> giờ
-          </div>
-          <div>
-            Tổng tiền:{' '}
-            <strong>{total.toLocaleString('vi-VN')} đ</strong>
-          </div>
+          <div>Thời lượng: <strong>{duration}</strong> giờ</div>
+          <div>Tổng tiền: <strong>{total.toLocaleString('vi-VN')} đ</strong></div>
         </div>
 
         {err && <div className="form-error">{err}</div>}
