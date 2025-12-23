@@ -6,7 +6,7 @@
 ## Cài đặt & chạy
 ```bash
 # 1. Tìm nơi muốn lưu dự án
-..\donwload_here> git clone https://github.com/username/repo.git
+..\donwload_here> git clone https://github.com/mainhatthanh/OrderPickleBall.git
 
 
 # 2. Cài dependencies
