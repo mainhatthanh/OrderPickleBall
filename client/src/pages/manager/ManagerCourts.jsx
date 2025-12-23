@@ -6,6 +6,16 @@ export default function ManagerCourts() {
   const [items, setItems] = useState([]);
   const [form, setForm] = useState({ name: '', address: '', pricePerHour: '' });
 
+  // map status -> tiếng Việt
+  const statusText = (s) => {
+    const map = {
+      active: 'Đã xác nhận',
+      pending: 'Chờ duyệt',
+      rejected: 'Từ chối',
+    };
+    return map[s] || s;
+  };
+
   // load danh sách sân
   const load = () => api('/manager/courts').then(setItems);
   useEffect(() => {
@@ -53,7 +63,7 @@ export default function ManagerCourts() {
           placeholder="Giá/giờ"
           value={form.pricePerHour}
           onChange={(e) => setForm({ ...form, pricePerHour: e.target.value })}
-          step={50000} // mỗi lần tăng/giảm 50.000
+          step={50000}
           min={0}
         />
         <button onClick={save}>Gửi duyệt</button>
@@ -71,7 +81,11 @@ export default function ManagerCourts() {
               <b>{c.name}</b>
               <span>{c.address}</span>
               <span>{c.pricePerHour?.toLocaleString('vi-VN')} đ/giờ</span>
-              <i>{c.status}</i>
+
+              {/* ✅ Badge trạng thái */}
+              <span className={`status-badge ${c.status}`}>
+                {statusText(c.status)}
+              </span>
             </div>
           ))
         )}

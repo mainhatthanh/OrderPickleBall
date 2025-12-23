@@ -54,7 +54,7 @@ export default function ManagerOrders() {
 
   return (
     <div className="manager-orders">
-      <h2>Đơn đặt sân (chờ duyệt minh chứng)</h2>
+      <h2>Đơn đặt sân</h2>
 
       {err && <div style={{ marginBottom: 10, color: 'crimson' }}>{err}</div>}
       {loading && <div style={{ marginBottom: 10 }}>Đang tải…</div>}
@@ -117,15 +117,11 @@ export default function ManagerOrders() {
 
           {items.length === 0 && !loading && (
             <tr>
-              <td colSpan="8">Chưa có đơn Pending nào</td>
+              <td colSpan="8">Chưa có đơn đặt sân nào</td>
             </tr>
           )}
         </tbody>
       </table>
-
-      <div style={{ marginTop: 10, fontSize: 13, opacity: 0.8 }}>
-        * Nút Duyệt/Từ chối chỉ bật khi đã có minh chứng.
-      </div>
     </div>
   );
 }

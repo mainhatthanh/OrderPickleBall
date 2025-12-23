@@ -5,11 +5,13 @@
   --muted: #6b7280;
   --border: #e5e7eb;
   --radius: 14px;
-  --shadow-sm: 0 6px 18px rgba(0,0,0,.1);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, .1);
 }
 
 /* Reset box sizing toàn bộ để tránh tràn */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -35,9 +37,9 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.6);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: var(--shadow-sm);
   padding: 20px;
   backdrop-filter: blur(10px);
@@ -58,7 +60,7 @@
 .court-form input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(76,175,80,0.25);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25);
 }
 
 /* Button full width */
@@ -72,7 +74,7 @@
   font-weight: 700;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(76,175,80,0.35);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.35);
   transition: background 0.2s ease, transform 0.06s ease;
 }
 
@@ -93,9 +95,9 @@
 }
 
 .court-item {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.6);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: var(--shadow-sm);
   padding: 14px 18px;
   display: flex;
@@ -106,7 +108,7 @@
 
 .court-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .court-item b {
@@ -124,7 +126,7 @@
 .manager-courts hr {
   margin: 28px 0;
   border: none;
-  border-top: 1px solid rgba(255,255,255,0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* Responsive */
@@ -137,4 +139,39 @@
   .court-form {
     padding: 16px;
   }
+}
+
+/* ===== STATUS BADGE (giống MyBookings) ===== */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  margin-top: 8px;
+  width: fit-content;
+}
+
+/* Đã xác nhận */
+.status-badge.active {
+  color: #0f5132;
+  background: #d1e7dd;
+}
+
+/* Chờ duyệt */
+.status-badge.pending {
+  color: #664d03;
+  background: #fff3cd;
+}
+
+/* Từ chối */
+.status-badge.rejected {
+  color: #842029;
+  background: #f8d7da;
+}
+
+/* Bảo trì */
+.status-badge.maintenance {
+  color: #084298;
+  background: #cfe2ff;
 }

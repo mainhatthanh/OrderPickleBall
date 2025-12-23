@@ -9,15 +9,12 @@ function normalizeStatus(s) {
 }
 
 function statusLabel(s) {
-  // Bạn có thể đổi sang tiếng Việt cho đẹp:
-  // if (s === 'pending') return 'Chờ duyệt';
-  // if (s === 'confirmed') return 'Đã xác nhận';
-  // if (s === 'rejected') return 'Từ chối';
-  // if (s === 'cancelled') return 'Đã hủy';
-  // return s;
 
-  // Giữ tiếng Anh giống bạn đang có:
-  return normalizeStatus(s).replace('_', ' ');
+  if (s === 'pending') return 'Chờ duyệt';
+  if (s === 'confirmed') return 'Đã xác nhận';
+  if (s === 'rejected') return 'Từ chối';
+  return s;
+
 }
 
 export default function MyBookings() {
