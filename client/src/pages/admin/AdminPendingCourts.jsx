@@ -30,8 +30,8 @@ export default function AdminPendingCourts() {
             </div>
 
             <div className="actions">
-              <button className="btn btn-approve" onClick={() => act(c.id, 'approve')}>Duyệt</button>
-              <button className="btn btn-reject"  onClick={() => act(c.id, 'reject')}>Từ chối</button>
+              <button className="btn1 btn-approve" onClick={() => act(c.id, 'approve')}>Duyệt</button>
+              <button className="btn1 btn-reject" onClick={() => act(c.id, 'reject')}>Từ chối</button>
             </div>
           </div>
         ))}
