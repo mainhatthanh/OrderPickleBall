@@ -88,6 +88,7 @@
   flex-shrink: 0;
 }
 
+/* ===== Buttons ===== */
 .btn1 {
   appearance: none;
   border: 1px solid var(--border);
@@ -100,13 +101,14 @@
   transition: background .2s ease, border-color .2s ease, transform .06s ease, opacity .2s ease;
 }
 
-.btn:hover {
+.btn1:hover {
   background: #f6f7f9;
 }
 
-.btn:active {
+.btn1:active {
   transform: translateY(1px);
 }
+
 
 .btn-approve {
   border-color: rgba(76, 175, 80, .35);
