@@ -10,19 +10,19 @@ export default function NavBar() {
             <div className="navbar-left">
                 <Link to="/">🏠 Trang chủ</Link>
 
-                {user?.role === 'user' && <Link to="/my-bookings">Lịch của tôi</Link>}
+                {user?.role === 'user' && <Link to="/my-bookings">📆Lịch của tôi</Link>}
                 {user?.role === 'admin' && (
                     <>
-                        <Link to="/admin/pending-courts">Duyệt sân</Link>
-                        <Link to="/admin/stats">Thống kê</Link>
-                        <Link to="/admin/users">Người dùng</Link>
+                        <Link to="/admin/pending-courts">🥎Duyệt sân</Link>
+                        <Link to="/admin/stats">💸Thống kê</Link>
+                        <Link to="/admin/users">👑Người dùng</Link>
                     </>
                 )}
                 {user?.role === 'manager' && (
                     <>
-                        <Link to="/manager/courts">Sân của tôi</Link>
-                        <Link to="/manager/orders">Đơn đặt</Link>
-                        <Link to="/manager/payment">Thanh toán</Link>
+                        <Link to="/manager/courts">🥎Sân của tôi</Link>
+                        <Link to="/manager/orders">📋Đơn đặt</Link>
+                        <Link to="/manager/payment">💳Thanh toán</Link>
                     </>
                 )}
             </div>
