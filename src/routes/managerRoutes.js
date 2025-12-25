@@ -1,13 +1,15 @@
 // src/routes/managerRoutes.js
 import { Router } from 'express';
 import { requireAuth, requireRole } from '../middleware/auth.js';
+import { uploadCourtImage } from '../middleware/uploadCourtImage.js';
 import {
     myCourts,
     upsertCourt,
     myOrders,
     setPaymentProfile,
     approveBooking,
-    rejectBooking
+    rejectBooking,
+    uploadCourtImageHandler
 } from '../controllers/managerController.js';
 
 const r = Router();
@@ -15,6 +17,7 @@ r.use(requireAuth, requireRole('manager'));
 
 r.get('/courts', myCourts);
 r.post('/courts/upsert', upsertCourt);
+r.post('/courts/upload-image', uploadCourtImage.single('image'), uploadCourtImageHandler);
 
 // có thể lọc: /manager/orders?status=pending
 r.get('/orders', myOrders);

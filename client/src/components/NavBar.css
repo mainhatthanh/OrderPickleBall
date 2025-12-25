@@ -1,76 +1,168 @@
 :root {
     --primary: #4CAF50;
     --primary-700: #2e7d32;
+    --primary-100: #e8f5e9;
     --text: #1f2937;
     --muted: #6b7280;
-    --bg-blur: rgba(255, 255, 255, 0.6);
-    --radius: 16px;
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --bg-blur: rgba(255, 255, 255, 0.85);
+    --border: #e5e7eb;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 18px;
-    padding: 10px 32px;
+    gap: 16px;
+    padding: 12px 24px;
     background: var(--bg-blur);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
 }
 
 .navbar-left,
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 6px;
 }
 
-.navbar a {
-    color: var(--primary-700);
+/* ========= NAV LINKS (Consistency) ========= */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    color: var(--text);
     font-weight: 600;
+    font-size: 14px;
     text-decoration: none;
-    transition: color 0.2s ease;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
 }
 
-.navbar a:hover {
-    color: var(--primary);
-    text-decoration: underline;
+.nav-link:hover {
+    background: var(--primary-100);
+    color: var(--primary-700);
+    text-decoration: none;
 }
 
-.navbar span {
-    font-weight: 500;
+/* Active state (Consistency - shows current page) */
+.nav-link.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary-700);
+}
+
+/* ========= USER SECTION ========= */
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #f9fafb;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
     color: var(--text);
 }
 
-.navbar button {
-    padding: 6px 14px;
-    border-radius: var(--radius);
-    border: none;
+.user-role-badge {
+    font-size: 16px;
+}
+
+.user-greeting strong {
+    font-weight: 700;
+}
+
+/* ========= BUTTONS (Consistency) ========= */
+.logout-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
     cursor: pointer;
-    background: var(--primary);
-    color: white;
+    background: white;
+    color: var(--muted);
     font-weight: 600;
-    transition: background 0.25s ease, transform 0.1s ease;
+    font-size: 14px;
+    transition: all 0.15s ease;
 }
 
-.navbar button:hover {
-    background: var(--primary-700);
+.logout-btn:hover {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
 }
 
-.navbar button:active {
+.logout-btn:active {
     transform: translateY(1px);
 }
 
-@media (max-width: 600px) {
+.login-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: var(--primary);
+    color: white !important;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none !important;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.25);
+}
+
+.login-link:hover {
+    background: var(--primary-700);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.35);
+}
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+    }
+
+    .navbar-left {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .user-greeting {
+        font-size: 13px;
+        padding: 4px 10px;
+    }
+}
+
+@media (max-width: 500px) {
     .navbar {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 10px;
+    }
+
+    .navbar-left {
+        justify-content: center;
+    }
+
+    .navbar-right {
+        justify-content: center;
+        border-top: 1px solid var(--border);
+        padding-top: 10px;
     }
 }

@@ -9,16 +9,32 @@ export function myCourts(req, res) {
 
 // tạo/sửa sân (đặt về trạng thái 'pending' để chờ admin duyệt)
 export function upsertCourt(req, res) {
-    const { id, name, address, pricePerHour } = req.body || {};
+    const { id, name, address, pricePerHour, hourlyPrices, imageUrl, mapUrl } = req.body || {};
     if (!name || !address || !pricePerHour) {
         return res.status(400).json({ message: 'Thiếu name/address/pricePerHour' });
     }
+    
+    // Validate hourlyPrices nếu có
+    let validatedHourlyPrices = {};
+    if (hourlyPrices && typeof hourlyPrices === 'object') {
+        for (const [hour, price] of Object.entries(hourlyPrices)) {
+            const h = Number(hour);
+            const p = Number(price);
+            if (h >= 0 && h <= 23 && p > 0) {
+                validatedHourlyPrices[h] = p;
+            }
+        }
+    }
+    
     if (id) {
         const c = db.data.courts.find(x => x.id === id && x.ownerId === req.user.id);
         if (!c) return res.status(404).json({ message: 'Không tìm thấy sân của bạn' });
         c.name = name;
         c.address = address;
         c.pricePerHour = Number(pricePerHour);
+        c.hourlyPrices = validatedHourlyPrices;
+        c.imageUrl = imageUrl || null;
+        c.mapUrl = mapUrl || null;
         if (c.status === 'active') c.status = 'pending';
     } else {
         const newId = 'c' + (db.data.courts.length + 1);
@@ -27,6 +43,9 @@ export function upsertCourt(req, res) {
             name,
             address,
             pricePerHour: Number(pricePerHour),
+            hourlyPrices: validatedHourlyPrices,
+            imageUrl: imageUrl || null,
+            mapUrl: mapUrl || null,
             status: 'pending',
             images: [],
             ownerId: req.user.id,
@@ -146,4 +165,18 @@ export function setPaymentProfile(req, res) {
     }
     db.write();
     res.json({ message: 'Đã cập nhật', profile: p });
+}
+
+// Upload ảnh sân
+export function uploadCourtImageHandler(req, res) {
+    if (!req.file) {
+        return res.status(400).json({ message: 'Chưa chọn file ảnh' });
+    }
+    
+    // Trả về URL của ảnh đã upload
+    const imageUrl = `/uploads/court_images/${req.file.filename}`;
+    res.json({ 
+        message: 'Upload thành công',
+        imageUrl 
+    });
 }
