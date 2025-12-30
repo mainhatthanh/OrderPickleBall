@@ -31,15 +31,21 @@ function calculateTotalAmount(court, startHour, endHour) {
 export function listMy(req, res) {
     const courts = db.data.courts || [];
     const courtById = new Map(courts.map(c => [c.id, c]));
+    const paymentProfiles = db.data.paymentProfiles || [];
 
     const items = (db.data.bookings || [])
         .filter(b => b.userId === req.user.id)
         .map(b => {
             const c = courtById.get(b.courtId) || {};
+            // Lấy thông tin liên hệ chủ sân
+            const ownerProfile = paymentProfiles.find(p => p.ownerId === c.ownerId);
             return {
                 ...b,
                 courtName: b.courtName || c.name || b.courtId,
                 courtAddress: b.address || c.address || '(Không rõ địa chỉ)',
+                courtImageUrl: c.imageUrl || null,
+                ownerPhone: ownerProfile?.phone || null,
+                ownerName: ownerProfile?.accountName || null,
             };
         });
 

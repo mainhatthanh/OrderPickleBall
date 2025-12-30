@@ -7,9 +7,11 @@ import {
     upsertCourt,
     myOrders,
     setPaymentProfile,
+    getPaymentProfile,
     approveBooking,
     rejectBooking,
-    uploadCourtImageHandler
+    uploadCourtImageHandler,
+    deleteCourt
 } from '../controllers/managerController.js';
 
 const r = Router();
@@ -18,10 +20,12 @@ r.use(requireAuth, requireRole('manager'));
 r.get('/courts', myCourts);
 r.post('/courts/upsert', upsertCourt);
 r.post('/courts/upload-image', uploadCourtImage.single('image'), uploadCourtImageHandler);
+r.delete('/courts/:id', deleteCourt);
 
 // có thể lọc: /manager/orders?status=pending
 r.get('/orders', myOrders);
 
+r.get('/payment-profile', getPaymentProfile);
 r.post('/payment-profile', setPaymentProfile);
 
 // NEW: duyệt / từ chối booking pending

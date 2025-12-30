@@ -17,9 +17,7 @@
     justify-content: space-between;
     gap: 16px;
     padding: 12px 24px;
-    background: var(--bg-blur);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #ffffff;
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
     position: sticky;

@@ -603,6 +603,11 @@
   color: var(--danger);
 }
 
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
 .edit-btn {
   padding: 8px 16px;
   background: white;
@@ -618,6 +623,23 @@
   border-color: var(--primary);
   background: var(--primary-light);
   color: var(--primary-dark);
+}
+
+.delete-btn {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--danger);
+}
+
+.delete-btn:hover {
+  border-color: var(--danger);
+  background: var(--danger-bg);
 }
 
 /* ===== HR ===== */

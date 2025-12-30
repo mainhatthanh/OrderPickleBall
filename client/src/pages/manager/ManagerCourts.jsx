@@ -75,6 +75,19 @@ export default function ManagerCourts() {
     setShowPricing(Object.keys(court.hourlyPrices || {}).length > 0);
   };
 
+  const handleDelete = async (court) => {
+    const confirmMsg = `Bạn có chắc muốn xóa sân "${court.name}"?\n\nHành động này không thể hoàn tác!`;
+    if (!window.confirm(confirmMsg)) return;
+
+    try {
+      await api(`/manager/courts/${court.id}`, { method: 'DELETE' });
+      alert('Đã xóa sân thành công!');
+      await load();
+    } catch (err) {
+      alert(err.message || 'Lỗi xóa sân');
+    }
+  };
+
   // Handle file upload
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0];
@@ -358,12 +371,21 @@ export default function ManagerCourts() {
                    c.status === 'pending' ? '⏳ Chờ duyệt' : 
                    c.status === 'rejected' ? '❌ Từ chối' : c.status}
                 </span>
-                <button 
-                  className="edit-btn"
-                  onClick={() => startEdit(c)}
-                >
-                  ✏️ Sửa
-                </button>
+                <div className="action-buttons">
+                  <button 
+                    className="edit-btn"
+                    onClick={() => startEdit(c)}
+                  >
+                    ✏️ Sửa
+                  </button>
+                  <button 
+                    className="delete-btn"
+                    onClick={() => handleDelete(c)}
+                    title="Xóa sân"
+                  >
+                    🗑️ Xóa
+                  </button>
+                </div>
               </div>
             </div>
           ))

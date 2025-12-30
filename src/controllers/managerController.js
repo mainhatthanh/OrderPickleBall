@@ -1,5 +1,6 @@
 // src/controllers/managerController.js
 import { db } from '../db.js';
+import { nanoid } from 'nanoid';
 
 // xem tất cả sân thuộc về manager hiện tại
 export function myCourts(req, res) {
@@ -37,7 +38,7 @@ export function upsertCourt(req, res) {
         c.mapUrl = mapUrl || null;
         if (c.status === 'active') c.status = 'pending';
     } else {
-        const newId = 'c' + (db.data.courts.length + 1);
+        const newId = 'c_' + nanoid(8);
         db.data.courts.push({
             id: newId,
             name,
@@ -150,21 +151,28 @@ export function rejectBooking(req, res) {
 
 // cập nhật thông tin tài khoản nhận tiền (để client sinh QR)
 export function setPaymentProfile(req, res) {
-    const { bank, accountNo, accountName } = req.body || {};
+    const { bank, accountNo, accountName, phone } = req.body || {};
     if (!bank || !accountNo || !accountName) {
         return res.status(400).json({ message: 'Thiếu bank/accountNo/accountName' });
     }
     let p = db.data.paymentProfiles.find(x => x.ownerId === req.user.id);
     if (!p) {
-        p = { id: 'pp_' + req.user.id, ownerId: req.user.id, bank, accountNo, accountName };
+        p = { id: 'pp_' + req.user.id, ownerId: req.user.id, bank, accountNo, accountName, phone: phone || '' };
         db.data.paymentProfiles.push(p);
     } else {
         p.bank = bank;
         p.accountNo = accountNo;
         p.accountName = accountName;
+        p.phone = phone || p.phone || '';
     }
     db.write();
     res.json({ message: 'Đã cập nhật', profile: p });
+}
+
+// Lấy thông tin thanh toán hiện tại
+export function getPaymentProfile(req, res) {
+    const p = db.data.paymentProfiles.find(x => x.ownerId === req.user.id);
+    res.json(p || null);
 }
 
 // Upload ảnh sân
@@ -179,4 +187,34 @@ export function uploadCourtImageHandler(req, res) {
         message: 'Upload thành công',
         imageUrl 
     });
+}
+
+// Xóa sân
+export function deleteCourt(req, res) {
+    const { id } = req.params;
+    
+    const courtIndex = db.data.courts.findIndex(c => c.id === id && c.ownerId === req.user.id);
+    if (courtIndex === -1) {
+        return res.status(404).json({ message: 'Không tìm thấy sân của bạn' });
+    }
+    
+    // Lấy ngày hôm nay (YYYY-MM-DD)
+    const today = new Date().toISOString().slice(0, 10);
+    
+    // Kiểm tra xem sân có booking trong tương lai (từ hôm nay trở đi) với status pending/confirmed không
+    const hasFutureBookings = db.data.bookings.some(
+        b => b.courtId === id && 
+             b.date >= today && 
+             ['pending', 'confirmed', 'pending_payment'].includes(b.status)
+    );
+    
+    if (hasFutureBookings) {
+        return res.status(400).json({ message: 'Không thể xóa sân đang có lịch đặt trong tương lai' });
+    }
+    
+    // Xóa sân
+    db.data.courts.splice(courtIndex, 1);
+    db.write();
+    
+    res.json({ message: 'Đã xóa sân thành công' });
 }
