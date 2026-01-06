@@ -1,75 +1,106 @@
 :root {
   --primary: #4CAF50;
   --primary-700: #2e7d32;
+  --primary-100: #e8f5e9;
   --text: #1f2937;
   --muted: #6b7280;
   --border: #e5e7eb;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
   --radius: 16px;
   --radius-sm: 10px;
-  --shadow-sm: 0 6px 18px rgba(0, 0, 0, .10);
+  --shadow: 0 12px 32px rgba(0, 0, 0, .12);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, .08);
 }
 
 .login-page {
   min-height: calc(100vh - 64px);
-  /* chừa header; chỉnh số nếu header cao/thấp khác */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px 16px;
   position: relative;
   z-index: 1;
-  /* nằm trên overlay nền nếu có */
 }
 
 .login-card {
   width: 100%;
   max-width: 420px;
-  background: rgba(255, 255, 255, .82);
+  background: rgba(255, 255, 255, .92);
   border: 1px solid rgba(255, 255, 255, .6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+}
+
+/* ========= LOGIN HEADER ========= */
+.login-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.login-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
 }
 
 .login-title {
-  margin: 0 0 14px;
-  font-size: 24px;
+  margin: 0 0 6px;
+  font-size: 26px;
   font-weight: 800;
-  text-align: center;
+  color: var(--text);
 }
 
+.login-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ========= INPUT GROUPS ========= */
 .input-group {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .input-group label {
   font-size: 14px;
   font-weight: 600;
+  color: var(--text);
 }
 
 .input-group input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border: 2px solid var(--border);
   border-radius: var(--radius-sm);
   background: #fff;
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
-  transition: border-color .15s ease, box-shadow .15s ease;
+  transition: all .15s ease;
+}
+
+.input-group input::placeholder {
+  color: #9ca3af;
 }
 
 .input-group input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, .25);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, .2);
 }
 
-/* ô mật khẩu có nút hiện/ẩn */
+/* ========= PASSWORD FIELD ========= */
 .pwd-wrap {
   position: relative;
+}
+
+.pwd-wrap input {
+  padding-right: 80px;
 }
 
 .toggle-pwd {
@@ -78,90 +109,201 @@
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  background: transparent;
+  background: var(--primary-100);
   color: var(--primary-700);
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
 }
 
 .toggle-pwd:hover {
-  background: rgba(76, 175, 80, .08);
+  background: var(--primary);
+  color: white;
 }
 
-/* lỗi */
+/* ========= ERROR MESSAGE (User Guidance) ========= */
 .form-error {
-  margin: 6px 0 8px;
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
   border-radius: var(--radius-sm);
-  background: #fff3f3;
-  border: 1px solid #ffc6c6;
-  color: #b4232a;
+  background: var(--danger-bg);
+  border: 1px solid #fecaca;
+  color: var(--danger);
   font-size: 14px;
 }
 
-/* nút submit */
+.form-error .error-icon {
+  flex-shrink: 0;
+}
+
+/* ========= SUBMIT BUTTON ========= */
 .btn-primary {
   width: 100%;
-  height: 44px;
+  height: 48px;
   border: none;
-  border-radius: var(--radius);
-  background: var(--primary);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary), var(--primary-700));
   color: #fff;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(76, 175, 80, .28);
-  transition: background .2s ease, transform .06s ease, opacity .2s ease;
+  box-shadow: 0 4px 14px rgba(76, 175, 80, .3);
+  transition: all .2s ease;
 }
 
-.btn-primary:hover {
-  background: var(--primary-700);
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, .4);
 }
 
-.btn-primary:active {
-  transform: translateY(1px);
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-primary:disabled {
   opacity: .55;
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
 }
 
-.demo-note {
-  margin-top: 12px;
-  text-align: center;
-  color: var(--muted);
+/* ========= DEMO ACCOUNTS (User Guidance) ========= */
+.demo-accounts {
+  margin-top: 20px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.demo-accounts summary {
+  padding: 12px 14px;
   font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  list-style: none;
 }
 
-.demo-note strong {
+.demo-accounts summary::-webkit-details-marker {
+  display: none;
+}
+
+.demo-accounts summary:hover {
+  background: #f3f4f6;
+}
+
+.demo-accounts[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.account-list {
+  padding: 12px 14px;
+}
+
+.account-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.account-item:hover {
+  border-color: var(--primary);
+  background: var(--primary-100);
+}
+
+.account-item span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.account-item code {
+  font-size: 12px;
+  background: #e5e7eb;
+  padding: 2px 8px;
+  border-radius: 4px;
   color: var(--text);
 }
 
+.pwd-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.pwd-hint strong {
+  color: var(--text);
+}
+
+/* ========= LOGIN FOOTER ========= */
+.login-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.login-footer p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.login-footer a {
+  color: var(--primary-700);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ========= RESPONSIVE ========= */
 @media (max-width: 480px) {
   .login-card {
-    padding: 22px 16px;
+    padding: 24px 20px;
+  }
+
+  .login-icon {
+    font-size: 40px;
+  }
+
+  .login-title {
+    font-size: 22px;
   }
 }
 
-/* Khi tái dùng login.css, <select> cần “bắt chước” input */
+/* ========= SHARED STYLES ========= */
 .input-like,
 .input-group select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border: 2px solid var(--border);
   border-radius: var(--radius-sm);
   background: #fff;
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
-  transition: border-color .15s ease, box-shadow .15s ease;
+  transition: all .15s ease;
 }
 
 .input-like:focus,
 .input-group select:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, .25);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, .2);
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { login } from '../services/auth';
-import { Link } from 'react-router-dom';   // ✅ thêm import này
+import { Link } from 'react-router-dom';
 import './Login.css';
 
 export default function Login() {
@@ -8,42 +8,61 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [err, setErr] = useState('');
   const [showPwd, setShowPwd] = useState(false);
-  const disabled = !email || !password;
+  const [loading, setLoading] = useState(false);
+  const disabled = !email || !password || loading;
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setErr('');
+    setLoading(true);
     try {
       await login(email, password);
-      location.href = '/';
+      window.location.href = '/';
     } catch (e) {
-      setErr(e?.message || 'Đăng nhập thất bại');
+      // User Guidance: Specific error messages
+      const msg = e?.message || '';
+      if (msg.includes('password') || msg.includes('mật khẩu')) {
+        setErr('Mật khẩu không đúng. Vui lòng kiểm tra lại.');
+      } else if (msg.includes('email') || msg.includes('user') || msg.includes('không tìm')) {
+        setErr('Email không tồn tại trong hệ thống.');
+      } else {
+        setErr(msg || 'Đăng nhập thất bại. Vui lòng thử lại.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-page">
       <form className="login-card" onSubmit={onSubmit}>
-        <h2 className="login-title">Đăng nhập</h2>
+        <div className="login-header">
+          <span className="login-icon">🎾</span>
+          <h2 className="login-title">Đăng nhập</h2>
+          <p className="login-subtitle">Chào mừng bạn đến với PicklePlay</p>
+        </div>
 
         <div className="input-group">
-          <label>Email</label>
+          <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
-            placeholder="user@pickleplay.dev"
+            placeholder="Nhập email của bạn"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             required
+            aria-describedby="email-hint"
           />
         </div>
 
         <div className="input-group">
-          <label>Mật khẩu</label>
+          <label htmlFor="password">Mật khẩu</label>
           <div className="pwd-wrap">
             <input
+              id="password"
               type={showPwd ? 'text' : 'password'}
-              placeholder="••••••"
+              placeholder="Nhập mật khẩu"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
@@ -54,27 +73,50 @@ export default function Login() {
               className="toggle-pwd"
               onClick={() => setShowPwd((s) => !s)}
               aria-label={showPwd ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+              title={showPwd ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
             >
-              {showPwd ? 'Ẩn' : 'Hiện'}
+              {showPwd ? '🙈 Ẩn' : '👁️ Hiện'}
             </button>
           </div>
         </div>
 
-        {err && <div className="form-error">{err}</div>}
+        {/* Error with recovery hint (User Guidance + Recoverability) */}
+        {err && (
+          <div className="form-error" role="alert">
+            <span className="error-icon">⚠️</span>
+            {err}
+          </div>
+        )}
 
         <button className="btn-primary" type="submit" disabled={disabled}>
-          Đăng nhập
+          {loading ? '⏳ Đang xử lý...' : '🔑 Đăng nhập'}
         </button>
 
-        <p className="demo-note">
-          <strong>Tài khoản mẫu:</strong> admin/manager/user@pickleplay.dev<br />
-          <span>(mật khẩu: 123456)</span>
-        </p>
+        {/* Demo accounts info (User Guidance) */}
+        <details className="demo-accounts">
+          <summary>💡 Tài khoản dùng thử</summary>
+          <div className="account-list">
+            <div className="account-item" onClick={() => { setEmail('user@pickleplay.dev'); setPassword('123456'); }}>
+              <span>👤 Người dùng:</span>
+              <code>user@pickleplay.dev</code>
+            </div>
+            <div className="account-item" onClick={() => { setEmail('manager@pickleplay.dev'); setPassword('123456'); }}>
+              <span>🏢 Chủ sân:</span>
+              <code>manager@pickleplay.dev</code>
+            </div>
+            <div className="account-item" onClick={() => { setEmail('admin@pickleplay.dev'); setPassword('123456'); }}>
+              <span>👑 Admin:</span>
+              <code>admin@pickleplay.dev</code>
+            </div>
+            <p className="pwd-hint">Mật khẩu mặc định: <strong>123456</strong></p>
+          </div>
+        </details>
 
-        {/* ✅ Thêm link đăng ký ở đây */}
-        <p style={{ textAlign: 'center', marginTop: 12 }}>
-          Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link>
-        </p>
+        <div className="login-footer">
+          <p>
+            Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link>
+          </p>
+        </div>
       </form>
     </div>
   );

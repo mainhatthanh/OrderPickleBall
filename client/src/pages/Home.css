@@ -1,17 +1,19 @@
 /* ====== Theme tokens ====== */
 :root {
-  --bg-overlay: rgba(255, 255, 255, .62);
-  --blur: 8px;
-  --text: #222;
+  --bg-overlay: rgba(255, 255, 255, .68);
+  --blur: 10px;
+  --text: #1f2937;
   --muted: #6b7280;
   --primary: #4CAF50;
-  /* xanh thể thao */
   --primary-700: #2e7d32;
-  --card-start: #ffffff;
-  --card-end: #f5f9ff;
+  --primary-100: #e8f5e9;
+  --card-bg: #ffffff;
   --ring: rgba(76, 175, 80, .25);
   --shadow: 0 10px 24px rgba(0, 0, 0, .12);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, .08);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, .08);
+  --border: #e5e7eb;
+  --radius: 16px;
+  --radius-sm: 12px;
 }
 
 /* ====== Page background + overlay ====== */
@@ -19,10 +21,10 @@
   position: relative;
   min-height: 100vh;
   padding: 24px;
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: 'Lexend', Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   color: var(--text);
   background: url("https://cdn.shopvnb.com/uploads/images/bai_viet/pickleball-wallpaper-10-1750465001.webp") center/cover no-repeat fixed;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .home-container::before {
@@ -35,143 +37,543 @@
   z-index: 0;
 }
 
-/* ensure content is above overlay */
-.home-container>* {
+.home-container > * {
   position: relative;
   z-index: 1;
 }
 
-/* ====== Title ====== */
+/* ====== Header ====== */
+.home-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
 .home-title {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 4px 0 20px;
-  color: #1a1a1a;
-  letter-spacing: .2px;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  color: var(--text);
 }
 
-/* ====== Grid ====== */
-/* ====== Grid ====== */
-.court-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  /* ~5 sân / hàng */
-  gap: 16px;
-  align-items: stretch;
+.home-subtitle {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0;
 }
 
-@media (max-width: 1280px) {
-  .court-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+/* ====== Search Section ====== */
+.search-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@media (max-width: 1024px) {
-  .court-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.search-box {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-@media (max-width: 768px) {
-  .court-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .court-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-
-/* ====== Card ====== */
-.court-card {
-  border: 1px solid rgba(0, 0, 0, .06);
-  border-radius: 16px;
-  padding: 16px 16px 14px;
-  background: linear-gradient(135deg, var(--card-start) 0%, var(--card-end) 100%);
-  box-shadow: var(--shadow-sm);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-
-.court-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-  border-color: var(--ring);
-}
-
-/* Tiêu đề sân */
-.court-card h4 {
+.search-icon {
+  position: absolute;
+  left: 16px;
   font-size: 18px;
-  font-weight: 700;
-  margin: 2px 0 8px;
-  color: var(--primary);
+  pointer-events: none;
 }
 
-/* Dòng thông tin */
-.court-card div {
-  margin-bottom: 4px;
+.search-input {
+  width: 100%;
+  padding: 14px 44px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.clear-search {
+  position: absolute;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.clear-search:hover {
+  background: #e5e7eb;
+  color: var(--text);
+}
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-toggle:hover {
+  border-color: var(--primary);
+  background: var(--primary-100);
+}
+
+.filter-toggle.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+.filter-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 12px;
+  height: 12px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* ====== Filter Panel ====== */
+.filter-panel {
+  max-width: 700px;
+  margin: 0 auto 20px;
+  padding: 20px;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.price-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-range input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease;
+  min-width: 0;
+}
+
+.price-range input:focus {
+  border-color: var(--primary);
+}
+
+.range-separator {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.clear-filters {
+  padding: 10px 16px;
+  border: none;
+  background: #fef2f2;
+  color: #dc2626;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.clear-filters:hover {
+  background: #fee2e2;
+}
+
+/* ====== Results Info ====== */
+.results-info {
+  text-align: center;
+  margin-bottom: 20px;
   font-size: 14px;
   color: var(--muted);
 }
 
-/* Badge giá (tùy dùng span.price) */
-.court-card .price {
-  display: inline-block;
-  margin-top: 6px;
-  font-weight: 700;
+.results-info strong {
   color: var(--primary-700);
-  background: rgba(76, 175, 80, .08);
-  padding: 4px 8px;
-  border-radius: 999px;
 }
 
-/* ====== Button ====== */
-.court-card a {
-  display: inline-block;
-  margin-top: 10px;
+/* ====== Grid ====== */
+.court-grid,
+.loading-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1280px) {
+  .court-grid, .loading-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .court-grid, .loading-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .court-grid, .loading-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====== Card with Image ====== */
+.court-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
   text-decoration: none;
-  color: #fff;
+  color: inherit;
+  border: 1px solid transparent;
+}
+
+.court-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+  border-color: var(--primary);
+}
+
+/* Card Image */
+.card-image {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.court-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.price-tag {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+.price-tag span {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* Card Content */
+.card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.court-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.court-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.court-address span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.address-icon {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.card-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.view-detail {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  transition: color 0.15s ease;
+}
+
+.court-card:hover .view-detail {
+  color: var(--primary-700);
+}
+
+/* View-only card for admin/manager */
+.court-card.view-only {
+  cursor: default;
+}
+
+.court-card.view-only:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+  border-color: transparent;
+}
+
+.court-card.view-only:hover .card-image img {
+  transform: none;
+}
+
+.map-link-small {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 6px;
+  color: #0369a1;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.map-link-small:hover {
+  background: #e0f2fe;
+}
+
+/* ====== Empty State ====== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+
+.empty-state p {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
+.clear-filters-btn {
+  padding: 12px 24px;
+  border: none;
   background: var(--primary);
-  padding: 8px 14px;
-  border-radius: 10px;
+  color: white;
+  border-radius: var(--radius-sm);
   font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 6px 16px rgba(76, 175, 80, .25);
-  transition: transform .06s ease, box-shadow .18s ease, background .18s ease;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.court-card a:hover {
+.clear-filters-btn:hover {
   background: var(--primary-700);
-  box-shadow: 0 10px 22px rgba(76, 175, 80, .35);
 }
 
-.court-card a:active {
-  transform: translateY(1px);
+/* ====== Skeleton Loading ====== */
+.court-card.skeleton {
+  pointer-events: none;
 }
 
-/* ====== Responsive tweaks ====== */
-@media (max-width: 768px) {
+.skeleton-image {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-content {
+  padding: 16px;
+}
+
+.skeleton-title,
+.skeleton-text {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+.skeleton-title {
+  height: 20px;
+  width: 80%;
+  margin-bottom: 12px;
+}
+
+.skeleton-text {
+  height: 14px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.skeleton-text.short {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 640px) {
   .home-container {
     padding: 16px;
   }
 
   .home-title {
-    font-size: 22px;
-    margin-bottom: 14px;
+    font-size: 24px;
   }
 
-  .court-card {
-    height: 120px;
-    display: flex;
+  .home-subtitle {
+    font-size: 14px;
+  }
+
+  .search-section {
     flex-direction: column;
-    justify-content: space-between;
   }
 
-  .court-card a {
+  .filter-toggle {
+    justify-content: center;
+  }
+
+  .filter-panel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    min-width: 100%;
+  }
+
+  .clear-filters {
     width: 100%;
     text-align: center;
+  }
+
+  .card-image {
+    height: 140px;
+  }
+
+  .card-content {
+    padding: 14px;
+  }
+
+  .court-card h4 {
+    font-size: 15px;
   }
 }

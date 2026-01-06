@@ -12,6 +12,26 @@
   margin-bottom: 14px;
 }
 
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  border: 1px dashed #d1d5db;
+}
+
+.empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.empty-state p {
+  color: #6b7280;
+  font-size: 16px;
+}
+
 /* Danh sách thẻ */
 .approval-list {
   display: grid;
@@ -19,7 +39,7 @@
   gap: 12px;
 }
 
-/* Thẻ từng sân (glass + shadow) */
+/* Thẻ từng sân */
 .court-card {
   display: flex;
   align-items: center;
@@ -27,17 +47,30 @@
   gap: 14px;
   padding: 14px 16px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  cursor: pointer;
 }
 
 .court-card:hover {
-  transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
-  background: rgba(255, 255, 255, 0.75);
+  border-color: #d1d5db;
+}
+
+/* Thumbnail ảnh */
+.court-thumb {
+  width: 80px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.court-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Bên trái: thông tin */
@@ -46,7 +79,7 @@
   flex-direction: column;
   gap: 6px;
   min-width: 0;
-  /* chống tràn */
+  flex: 1;
 }
 
 .court-name {
@@ -79,6 +112,12 @@
   color: #0f5132;
   background: #ecfdf5;
   border-color: #bbf7d0;
+}
+
+.click-hint {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 2px;
 }
 
 /* Bên phải: hành động */
@@ -121,23 +160,204 @@
 }
 
 .btn-reject {
-  border-color: rgba(220, 38, 38, .3);
-  background: #fde2e2;
-  color: #a12020;
+  background: linear-gradient(180deg, #ef4444, #dc2626);
+  color: #fff;
 }
 
 .btn-reject:hover {
-  background: #fbd6d6;
+  filter: brightness(1.05);
 }
 
-/* Responsive nếu cần thu gọn nút xuống dòng */
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 15px;
+}
+
+/* Modal overlay */
+.court-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Modal */
+.court-modal {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 10;
+  transition: background .2s;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+.modal-content h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: #1f2937;
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.info-item {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.info-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.info-label {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.info-item .map-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.info-item .map-link:hover {
+  text-decoration: underline;
+}
+
+/* Bảng giá theo giờ trong modal */
+.hourly-prices-section {
+  margin-bottom: 20px;
+}
+
+.hourly-prices-section h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: #374151;
+}
+
+.hourly-prices-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.hour-price-item {
+  background: #f3f4f6;
+  padding: 8px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.hour-price-item.custom {
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+}
+
+.hour-price-item .hour {
+  display: block;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.hour-price-item .price {
+  display: block;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.custom-badge {
+  margin-left: 2px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.modal-actions .btn {
+  flex: 1;
+}
+
+/* Responsive */
 @media (max-width: 540px) {
   .court-card {
     flex-direction: column;
     align-items: stretch;
   }
 
+  .court-thumb {
+    width: 100%;
+    height: 120px;
+  }
+
   .actions {
     justify-content: flex-end;
+  }
+
+  .modal-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hourly-prices-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
