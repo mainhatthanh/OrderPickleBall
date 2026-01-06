@@ -49,8 +49,14 @@ export default function NavBar() {
                         <Link to="/manager/courts" className={`nav-link ${isActive('/manager/courts') ? 'active' : ''}`} title="Quản lý sân của bạn">
                             🏟️ Sân của tôi
                         </Link>
+                        <Link to="/manager/register-court" className={`nav-link ${isActive('/manager/register-court') ? 'active' : ''}`} title="Đăng ký sân mới">
+                            ➕ Đăng ký sân
+                        </Link>
                         <Link to="/manager/orders" className={`nav-link ${isActive('/manager/orders') ? 'active' : ''}`} title="Xem và duyệt đơn đặt sân">
                             📝 Đơn đặt sân
+                        </Link>
+                        <Link to="/manager/revenue" className={`nav-link ${isActive('/manager/revenue') ? 'active' : ''}`} title="Xem doanh thu theo sân">
+                            💰 Doanh thu
                         </Link>
                         <Link to="/manager/payment" className={`nav-link ${isActive('/manager/payment') ? 'active' : ''}`} title="Cài đặt thông tin nhận thanh toán">
                             💳 Thanh toán

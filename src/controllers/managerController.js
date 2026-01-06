@@ -218,3 +218,41 @@ export function deleteCourt(req, res) {
     
     res.json({ message: 'Đã xóa sân thành công' });
 }
+
+// Tính doanh thu (tất cả thời gian) cho các sân thuộc manager, chỉ tính booking confirmed
+export function revenue(req, res) {
+    const myCourts = db.data.courts.filter(c => c.ownerId === req.user.id);
+    const idToName = Object.fromEntries(myCourts.map(c => [c.id, c.name]));
+    const myCourtIds = new Set(myCourts.map(c => c.id));
+    const activeCourts = myCourts.filter(c => c.status === 'active');
+
+    const confirmed = (db.data.bookings || []).filter(
+        b => myCourtIds.has(b.courtId) && b.status === 'confirmed'
+    );
+
+    // Gom theo sân
+    const breakdownMap = new Map();
+    for (const b of confirmed) {
+        const current = breakdownMap.get(b.courtId) || { totalAmount: 0, bookingCount: 0 };
+        current.totalAmount += Number(b.amount) || 0;
+        current.bookingCount += 1;
+        breakdownMap.set(b.courtId, current);
+    }
+
+    const breakdown = Array.from(breakdownMap.entries()).map(([courtId, stats]) => ({
+        courtId,
+        courtName: idToName[courtId] || courtId,
+        totalAmount: stats.totalAmount,
+        bookingCount: stats.bookingCount,
+    }));
+
+    const totalAmount = breakdown.reduce((sum, item) => sum + item.totalAmount, 0);
+    const bookingCount = confirmed.length;
+
+    res.json({ 
+        totalAmount, 
+        bookingCount, 
+        breakdown,
+        totalActiveCourts: activeCourts.length,
+    });
+}

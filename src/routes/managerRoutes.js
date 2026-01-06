@@ -11,7 +11,8 @@ import {
     approveBooking,
     rejectBooking,
     uploadCourtImageHandler,
-    deleteCourt
+    deleteCourt,
+    revenue
 } from '../controllers/managerController.js';
 
 const r = Router();
@@ -27,6 +28,9 @@ r.get('/orders', myOrders);
 
 r.get('/payment-profile', getPaymentProfile);
 r.post('/payment-profile', setPaymentProfile);
+
+// Doanh thu all-time (booking confirmed)
+r.get('/revenue', revenue);
 
 // NEW: duyệt / từ chối booking pending
 r.post('/orders/approve', approveBooking);

@@ -10,6 +10,8 @@ import AdminStats from './pages/admin/AdminStats';
 import ManagerCourts from './pages/manager/ManagerCourts';
 import ManagerOrders from './pages/manager/ManagerOrders';
 import ManagerPayment from './pages/manager/ManagerPayment';
+import ManagerRevenue from './pages/manager/ManagerRevenue';
+import ManagerRegisterCourt from './pages/manager/ManagerRegisterCourt';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminUsers from './pages/admin/AdminUsers';
 import Register from './pages/Register.jsx';
@@ -29,8 +31,10 @@ export default function App() {
         <Route path="/admin/pending-courts" element={<ProtectedRoute roles={['admin']}><AdminPendingCourts /></ProtectedRoute>} />
         <Route path="/admin/stats" element={<ProtectedRoute roles={['admin']}><AdminStats /></ProtectedRoute>} />
         <Route path="/manager/courts" element={<ProtectedRoute roles={['manager']}><ManagerCourts /></ProtectedRoute>} />
+        <Route path="/manager/register-court" element={<ProtectedRoute roles={['manager']}><ManagerRegisterCourt /></ProtectedRoute>} />
         <Route path="/manager/orders" element={<ProtectedRoute roles={['manager']}><ManagerOrders /></ProtectedRoute>} />
         <Route path="/manager/payment" element={<ProtectedRoute roles={['manager']}><ManagerPayment /></ProtectedRoute>} />
+        <Route path="/manager/revenue" element={<ProtectedRoute roles={['manager']}><ManagerRevenue /></ProtectedRoute>} />
         <Route path="/admin/users" element={<ProtectedRoute roles={['admin']}><AdminUsers /></ProtectedRoute>} />
 
       </Routes>
